@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "lib": ["es6", "es2015"],
+        "target": "es5"
+    },
+    "files": [
+        "shop.ts",
+        "index.ts",
+        "shop.spec.ts"
+    ]
+}
