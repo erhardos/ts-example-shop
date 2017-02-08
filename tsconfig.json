@@ -4,6 +4,7 @@
         "target": "es5"
     },
     "files": [
+        "helper.ts",
         "shop.ts",
         "index.ts",
         "shop.spec.ts"

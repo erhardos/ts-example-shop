@@ -1,6 +1,9 @@
+import helper from './helper'
+
 interface InventoryItem {
     name: string;
     price: number;
+    computedPrice?: number; 
 }
 
 interface CartItem extends InventoryItem {
@@ -10,8 +13,11 @@ interface CartItem extends InventoryItem {
 
 export default class Shop {
 
-    constructor (private inventory: InventoryItem[] = [], public cart: CartItem[] = []){
-    }
+    constructor (
+        private inventory: InventoryItem[] = [], 
+        public cart: CartItem[] = [],
+        private promotions: Function[] = []
+        ) {}
 
     public createCart(newItems: string[]): void {
         newItems.forEach(item => {
@@ -38,10 +44,19 @@ export default class Shop {
     }
 
     public calculateTotalPrice(): string {
-        let price = 0;
+        let totalPrice = 0;
+
         this.cart.forEach(cartItem => {
-            price += cartItem.count * cartItem.price
+            const promotionChain = helper.compose(this.promotions.map(fn => (fn).bind(cartItem)));
+            let price = 0;
+            price = cartItem.price * cartItem.count;
+
+            price = promotionChain.call(cartItem, price);
+
+            totalPrice += price;
         })
-        return `$${price}`
+
+        return `$${totalPrice.toFixed(2)}`
     }
 }
+

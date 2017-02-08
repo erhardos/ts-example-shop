@@ -48,8 +48,41 @@ describe('tests of shop', () => {
         
         const shop = new Shop([apple, orange])
         shop.createCart(bucket);
-        expect(shop.calculateTotalPrice()).to.be.equal('$0.5')
+        expect(shop.calculateTotalPrice()).to.be.equal('$0.50')
     });
+
+    it('apply to one item promotion', () => {
+        function applePromotion(price) {
+            if (this.name === 'apple') {
+                price = price/2;
+                
+                if (this.count % 2 !== 0) {
+                    price = price + this.price;
+                } 
+            }
+
+           return price;
+        }
+
+
+        function orangePromotion(price) {
+            if (this.name === 'orange') {
+                price -= this.price * (~~this.count / 3) 
+            }
+
+           return price;
+        }
+
+
+        const apple = {name: 'apple', price: 0.1};
+        const orange = {name: 'orange', price: 0.2};
+
+        const bucket = ['apple', 'apple', 'orange', 'orange', 'orange'];
+        
+        const shop = new Shop([apple, orange], [], [applePromotion, orangePromotion])
+        shop.createCart(bucket);
+        expect(shop.calculateTotalPrice()).to.be.equal('$0.50')
+    })
 
 
 })

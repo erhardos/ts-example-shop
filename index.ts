@@ -9,8 +9,20 @@ const orange = {
     price: 0.25
 }
 
-const shop = new Shop([apple, orange])
+function applePromotion (price) {
+    if (this.name === 'apple'){
+        price /= 2;
 
-shop.createCart(['apple', 'orange', 'orange', 'orange'])
+        if (this.count % 2 !== 0) {
+            price += this.price;
+        }
+    }
+
+    return price;
+}
+
+const shop = new Shop([apple, orange], [], [applePromotion])
+
+shop.createCart(['apple', 'apple'])
 
 shop.calculateTotalPrice();
