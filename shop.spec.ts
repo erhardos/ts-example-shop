@@ -51,7 +51,7 @@ describe('tests of shop', () => {
         expect(shop.calculateTotalPrice()).to.be.equal('$0.50')
     });
 
-    it('apply to one item promotion', () => {
+    it('apply item promotion', () => {
         function applePromotion(price) {
             if (this.name === 'apple') {
                 price = price/2;
@@ -67,7 +67,7 @@ describe('tests of shop', () => {
 
         function orangePromotion(price) {
             if (this.name === 'orange') {
-                price -= this.price * (~~this.count / 3) 
+                price -= this.price * (~~(this.count / 3)) 
             }
 
            return price;
@@ -79,7 +79,7 @@ describe('tests of shop', () => {
 
         const bucket = ['apple', 'apple', 'orange', 'orange', 'orange'];
         
-        const shop = new Shop([apple, orange], [], [applePromotion, orangePromotion])
+        const shop = new Shop([apple, orange], [applePromotion, orangePromotion])
         shop.createCart(bucket);
         expect(shop.calculateTotalPrice()).to.be.equal('$0.50')
     })

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha shop.spec.js",
+    "postinstall": "typings install && tsc",
+    "tsc": "tsc"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +15,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "typings": "^2.1.0"
   }
 }
